@@ -1,45 +1,19 @@
-
 # react-native-thumbnail
-Get thumbnail from local media. Currently, it only supports for video.
 
-## Getting started
+本项目基于 [react-native-thumbnail](https://github.com/phuochau/react-native-thumbnail)
 
-`$ npm install react-native-thumbnail --save`
+## 文档地址 / Documentation URL 
 
-### Mostly automatic installation
+[中文 / Chinese](https://gitee.com/react-native-oh-library/usage-docs/blob/master/zh-cn/react-native-thumbnail.md)
 
-`$ react-native link react-native-thumbnail`
+[英文 / English](https://gitee.com/react-native-oh-library/usage-docs/blob/master/zh-en/react-native-thumbnail.md)
 
-### Manual installation
+## Codegen
 
+该库已接入 codegen，具体请查阅文档。
 
-#### iOS
+The library has been integrated with codegen. Please refer to the documentation for details.
 
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-thumbnail` and add `RNThumbnail.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNThumbnail.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+## 请悉知 / Acknowledgements
 
-#### Android
-
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNThumbnailPackage;` to the imports at the top of the file
-  - Add `new RNThumbnailPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':react-native-thumbnail'
-  	project(':react-native-thumbnail').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-thumbnail/android')
-  	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      implementation project(':react-native-thumbnail')
-  	```
-
-## Usage
-```javascript
-import RNThumbnail from 'react-native-thumbnail';
-
-RNThumbnail.get(filepath).then((result) => {
-  console.log(result.path); // thumbnail path
-})
-```
+本项目基于 [The MIT License (MIT)](https://github.com/phuochau/react-native-thumbnail/blob/main/LICENSE) ，请自由地享受和参与开源。

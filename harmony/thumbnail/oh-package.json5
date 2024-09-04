@@ -1,0 +1,11 @@
+{
+  "name": "@react-native-oh-tpl/react-native-thumbnail",
+  "version": "1.1.3-0.0.1",
+  "description": "Get thumbnail from local media.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@rnoh/react-native-openharmony": 'file:../libs/react_native_openharmony-5.0.0.491.har'
+  }
+}

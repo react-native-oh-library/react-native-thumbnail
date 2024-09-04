@@ -1,6 +1,7 @@
 
-import { NativeModules } from 'react-native';
+import { NativeModules, TurboModuleRegistry } from 'react-native';
 
-const { RNThumbnail } = NativeModules;
+const NativeThumbnail = TurboModuleRegistry.get('ThumbnailTurboModule');
+const RNThumbnail = NativeThumbnail ? NativeThumbnail : NativeModules.RNThumbnail;
 
 export default RNThumbnail;
