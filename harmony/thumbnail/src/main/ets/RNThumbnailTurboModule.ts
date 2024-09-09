@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { TurboModule, TurboModuleContext } from '@rnoh/react-native-openharmony/ts';
+import { TurboModule, type TurboModuleContext } from '@rnoh/react-native-openharmony/ts';
 import image from '@ohos.multimedia.image';
 import { media } from '@kit.MediaKit';
 import util from '@ohos.util';
@@ -32,16 +32,16 @@ export class RNThumbnailTurboModule extends TurboModule {
     super(ctx);
   }
 
-  get(filePath: string): Promise<{ path: string, width: number, height: number }> {
+  get(filePath: string): Promise<{ path: string; width: number; height: number }> {
     return new Promise(async (resolve, reject) => {
       try {
-        filePath = filePath.replace("file://", "");
+        let newFilePath = filePath.replace('file://', '');
 
         // 创建 AVImageGenerator 对象
         const avImageGenerator = await media.createAVImageGenerator();
 
         // 打开文件并设置 fdSrc
-        avImageGenerator.fdSrc = await fs.openSync(filePath, fs.OpenMode.READ_WRITE);
+        avImageGenerator.fdSrc = await fs.openSync(newFilePath, fs.OpenMode.READ_WRITE);
 
         // 设置查询选项和像素图参数
         const queryOption = media.AVImageQueryOptions.AV_IMAGE_QUERY_NEXT_SYNC;
@@ -51,17 +51,17 @@ export class RNThumbnailTurboModule extends TurboModule {
         };
 
         // 获取指定时间的像素图
-        const pixel_map = await avImageGenerator.fetchFrameByTime(1000000, queryOption, param);
+        const pixelMap = await avImageGenerator.fetchFrameByTime(1000000, queryOption, param);
 
         // 释放资源
         avImageGenerator.release();
 
         // 获取图像信息
-        const imageInfo = await pixel_map.getImageInfo();
+        const imageInfo = await pixelMap.getImageInfo();
 
         // 获取能力上下文的文件目录
         const abilityContext = this.ctx.uiAbilityContext;
-        const cacheDir = abilityContext.filesDir + "/thumb";
+        const cacheDir = `${abilityContext.filesDir}/thumb`;
 
         // 检查缓存目录是否存在，若不存在则创建
         if (!fs.accessSync(cacheDir)) {
@@ -69,7 +69,7 @@ export class RNThumbnailTurboModule extends TurboModule {
         }
 
         // 生成文件名
-        const fileName = "thumb-" + util.generateRandomUUID(true) + ".jpeg";
+        const fileName = `thumb-${util.generateRandomUUID(true)}.jpeg`;
 
         // 构建图像路径
         const imagePath = `${cacheDir}/${fileName}`;
@@ -79,10 +79,10 @@ export class RNThumbnailTurboModule extends TurboModule {
 
         // 创建图像打包器并设置打包选项
         const imagePackerApi = image.createImagePacker();
-        const packOpts = { format: "image/jpeg", quality: 100 };
+        const packOpts = { format: 'image/jpeg', quality: 100 };
 
         // 打包像素图为数据并写入文件
-        const data = await imagePackerApi.packing(pixel_map, packOpts);
+        const data = await imagePackerApi.packing(pixelMap, packOpts);
         fs.writeSync(file.fd, data);
 
         // 关闭文件
@@ -90,13 +90,13 @@ export class RNThumbnailTurboModule extends TurboModule {
 
         // 返回包含路径、宽度和高度的对象
         resolve({
-          path: "file://" + cacheDir + '/' + fileName,
+          path: `file://${cacheDir}/${fileName}`,
           width: imageInfo.size.width,
           height: imageInfo.size.height,
         });
       } catch (error) {
-        console.error("E_RNThumnail_ERROR", error);
-        reject(new Error("E_RNThumnail_ERROR"));
+        console.error('E_RNThumnail_ERROR', error);
+        reject(new Error('E_RNThumnail_ERROR'));
       }
     });
   }

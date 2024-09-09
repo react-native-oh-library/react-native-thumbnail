@@ -27,14 +27,14 @@ import { RNThumbnailTurboModule } from './RNThumbnailTurboModule';
 
 class ThumbnailModulesFactory extends TurboModulesFactory {
   createTurboModule(name: string): TurboModule | null {
-    if (name === "ThumbnailTurboModule") {
+    if (name === 'ThumbnailTurboModule') {
       return new RNThumbnailTurboModule(this.ctx);
     }
     return null;
   }
 
   hasTurboModule(name: string): boolean {
-    return name === "ThumbnailTurboModule";
+    return name === 'ThumbnailTurboModule';
   }
 }
 
